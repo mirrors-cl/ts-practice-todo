@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { TodoItem } from './types/todo'
+import type { TodoItem, AddTodoPayload } from './types/todo'
 
 import TodoList from './components/TodoList.vue'
 import TodoInput from "./components/TodoInput.vue";
 // 定义一个 todoList 的响应式数据
 const todoList = ref<TodoItem[]>([
-  { id: '1', content: '学习 TS 泛型', isDone: false },
-  { id: '2', content: '重构简历', isDone: true }
+  { id: '1', content: '学习 TS 泛型', isDone: false,deadline:'2024-12-12' },
+  { id: '2', content: '重构简历', isDone: true,deadline:'2024-11-11' },
 ])
 
 // 处理添加待办事项的函数
-const handleAdd = (text: string) => {
+const handleAdd = (payload: AddTodoPayload) => {
   // 创建一个新的待办事项对象
   const newItem: TodoItem = {
     id: Date.now().toString(), // 使用时间戳作为唯一 ID
-    content: text, // 待办事项内容
+    content: payload.content, // 待办事项内容
+    deadline: payload.date || undefined,
     isDone: false // 默认未完成
   }
   // 将新的待办事项添加到 todoList 中

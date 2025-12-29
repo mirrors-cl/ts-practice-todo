@@ -21,6 +21,9 @@ const emit = defineEmits<{
         <span :style="{ textDecoration: item.isDone ? 'line-through' : 'none' }">
           {{ item.content }}
         </span>
+        <span v-if="item.deadline" style="color: red; margin-left: 10px; font-size: 12px;">
+          (截止: {{ item.deadline }})
+        </span>
         <button @click="emit('toggle', item.id)">完成</button>
         <button @click="emit('remove', item.id)">删除</button>
       </li>
