@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { TodoItem, AddTodoPayload } from './types/todo'
-
 import TodoList from './components/TodoList.vue'
 import TodoInput from "./components/TodoInput.vue";
+
+import { loginApi } from './api/user';
+
 // 定义一个 todoList 的响应式数据
 const todoList = ref<TodoItem[]>([
   { id: '1', content: '学习 TS 泛型', isDone: false,deadline:'2024-12-12' },
@@ -35,11 +37,30 @@ const handleToggle = (id: string) => {
     target.isDone = !target.isDone
   }
 }
+
+const testApi = async () =>{
+  try{
+    // 发送登录请求
+    console.log('正在发送请求...');
+    const res = await loginApi({account: 'admin', password: '123'})
+
+    console.log('登录成功',res.result.token);
+  }catch(error){
+    console.log('登录失败',error);
+  }
+}
+
 </script>
 
 <template>
   <div class="app-container">
     <h1>TS Todo List</h1>
+      <!-- 加个按钮来触发测试 -->
+    <div style="margin-bottom: 20px;">
+      <button @click="testApi" style="background-color: #42b983; color: white;">
+        测试 Axios 封装
+      </button>
+    </div>
     <TodoInput @add="handleAdd" />
     <TodoList 
     :list="todoList"
