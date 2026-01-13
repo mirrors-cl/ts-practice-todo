@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { loginApi } from './api/user';
-
+import { useUserStore } from './store/user';
 // import type { TodoItem, AddTodoPayload } from './types/todo'
 // import TodoList from './components/TodoList.vue'
 // import TodoInput from "./components/TodoInput.vue";
@@ -15,7 +15,14 @@ import type { BasicColumn } from "./components/BasicTable.vue";
 //   { id: '1', content: '学习 TS 泛型', isDone: false,deadline:'2024-12-12' },
 //   { id: '2', content: '重构简历', isDone: true,deadline:'2024-11-11' },
 // ])
+// 测试pinia
+const userStore = useUserStore();
 
+const testloginpinia = async () => {
+  console.log('开始登录pinia...');
+  await userStore.login('admin');
+  console.log('登录pinia完成，用户信息:', userStore.userInfo);
+}
 // new      
 const columns: BasicColumn[] = [
   { title: 'ID', dataIndex: 'id', width: '50px' },
@@ -89,6 +96,10 @@ const testApi = async () => {
       <button @click="testApi" style="background-color: #42b983; color: white;">
         测试 Axios 封装
       </button>
+      <button @click="testloginpinia">登录测试</button>
+      <h1 v-if="userStore.userInfo">
+       当前用户 {{ userStore.userInfo?.username }}
+       当前角色：{{ userStore.userInfo?.roles[0] }}</h1>
       <!-- 表格刷新按钮 -->
       <button @click="reload" :disabled="loading">
         {{ loading ? '加载中...' : '刷新表格数据' }}
