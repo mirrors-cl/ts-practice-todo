@@ -43,4 +43,6 @@ export const useUserStore = defineStore('user', ()=>{
         logout,
         hasRole
     }
-})
+},{
+    persist: true
+} );
