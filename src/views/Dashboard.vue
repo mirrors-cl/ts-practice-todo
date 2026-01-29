@@ -32,10 +32,48 @@ const { reload, getTableProps, loading } = useTable({
 
 reload();
 
+
 const handleLogout = () => {
   userStore.logout()
   router.push('/login');
 }
+
+
+// ============ 🟢 新增：用户列表区域 ============
+
+// 1. 定义新菜单 (表头)
+const userColumns: BasicColumn[] = [
+  { title: '用户ID', dataIndex: 'id', width: '80px' },
+  { title: '姓名', dataIndex: 'username' },
+  { title: '角色', dataIndex: 'role' }
+]
+
+// 2. 定义新供货商 (API)
+// 模拟一个返回用户数据的接口
+const getUserListApi = async () => {
+  await new Promise(resolve => setTimeout(resolve, 800)); // 假装慢一点
+  return [
+    { id: '101', username: '张三', role: '管理员' },
+    { id: '102', username: '李四', role: '普通用户' },
+    { id: '103', username: '王五', role: '审计员' }
+  ]
+}
+
+// 3. 调用 Hook (这一步就是复用的精髓！)
+const { 
+  // 把 getTableProps 重命名为 userTableProps
+  getTableProps: userTableProps, 
+  // 把 reload 重命名为 reloadUsers (避免和上面的 reload 冲突)
+  reload: reloadUsers,
+  // 把 loading 重命名为 userLoading
+  loading: userLoading
+} = useTable({
+  columns: userColumns,   // 传入新菜单
+  api: getUserListApi     // 传入新供货商
+});
+
+// 4. 让它自动加载
+reloadUsers();
 </script>
 
 
@@ -55,7 +93,19 @@ const handleLogout = () => {
       </button>
     </div>
     <BasicTable v-bind="getTableProps"></BasicTable>
+    <!-- 新增的复用逻辑 -->
+    <hr style="margin: 40px 0; border-top: 2px dashed #ccc;" />
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2>用户管理 (User List)</h2>
+      <button @click="reloadUsers" :disabled="userLoading">
+        {{ userLoading ? '读取中...' : '刷新用户' }}
+      </button>
+    </div>
+    
+    <BasicTable v-bind="userTableProps"></BasicTable>
   </div>
+  
 </template>
 
 <style scoped>

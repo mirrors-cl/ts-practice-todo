@@ -10,7 +10,8 @@ interface UserState {
 export const useUserStore = defineStore('user', ()=>{
     // 状态
     const userInfo = ref<UserState | null>(null); // 存储用户信息
-    const token = ref<string>('');
+    const token = ref<string>(localStorage.getItem('token') || ''); // 初始化时尝试读取本地Token
+    
     // 动作Actions
     // 模拟登录函数
     const login = async(role: 'admin' | 'user') =>{
