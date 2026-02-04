@@ -60,9 +60,9 @@ const getUserListApi = async () => {
 }
 
 // 3. 调用 Hook (这一步就是复用的精髓！)
-const { 
+const {
   // 把 getTableProps 重命名为 userTableProps
-  getTableProps: userTableProps, 
+  getTableProps: userTableProps,
   // 把 reload 重命名为 reloadUsers (避免和上面的 reload 冲突)
   reload: reloadUsers,
   // 把 loading 重命名为 userLoading
@@ -93,6 +93,17 @@ reloadUsers();
       </button>
     </div>
     <BasicTable v-bind="getTableProps"></BasicTable>
+    <!-- 自定义指令 -->
+    <div class="permission-test" style="margin: 20px 0; padding: 10px; border: 1px dashed orange;">
+      <h3>权限指令测试实验室</h3>
+      <button>👀 所有人可见</button>
+      <button v-auth="'user'" style="background: green; color: white; margin-left: 10px;">
+        👶 普通用户专属
+      </button>
+      <button v-auth="'admin'" style="background: red; color: white; margin-left: 10px;">
+        👮‍♀️ 管理员专属 (删除库跑路)
+      </button>
+    </div>
     <!-- 新增的复用逻辑 -->
     <hr style="margin: 40px 0; border-top: 2px dashed #ccc;" />
 
@@ -102,10 +113,10 @@ reloadUsers();
         {{ userLoading ? '读取中...' : '刷新用户' }}
       </button>
     </div>
-    
+
     <BasicTable v-bind="userTableProps"></BasicTable>
   </div>
-  
+
 </template>
 
 <style scoped>
