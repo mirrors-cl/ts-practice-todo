@@ -5,7 +5,7 @@ export interface BasicColumn {
   width?: string
 }
 
-const props = defineProps<{
+const {columns, dataSource} = defineProps<{
   columns: BasicColumn[];
   dataSource: any[];
 }>();

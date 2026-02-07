@@ -29,8 +29,8 @@ const onEnter = () => {
 </script>
 <template>
   <!--  输入框，绑定输入值并监听回车事件 -->
-  <input v-model="inputValue" @keyup.enter="onEnter" placeholder="输入后回车...">
-   <input type="date" v-model="inputDate" class="date-input" />
+  <input v-model="inputValue" placeholder="输入后回车..." @keyup.enter="onEnter">
+   <input v-model="inputDate" type="date" class="date-input" />
 </template>
 
 

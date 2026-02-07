@@ -9,7 +9,7 @@ interface UseTableProps {
 export function useTable(props: UseTableProps) {
   //
   const dataSource = ref<any[]>([]);
-  
+
   const loading = ref(false);
 
   const reload = async () => {
@@ -20,14 +20,13 @@ export function useTable(props: UseTableProps) {
       const res = await props.api();
       // 假设 api 返回的是我们之前封装的 Result 结构，或者是直接数组
       // 这里简单处理，兼容一下
-      // @ts-ignore
       dataSource.value = Array.isArray(res) ? res : res.result || []; // 适配不同返回结构
 
     } finally {
       loading.value = false;
     }
   }
-  const getTableProps  = ref({
+  const getTableProps = ref({
     columns: props.columns,
     dataSource: dataSource
   })

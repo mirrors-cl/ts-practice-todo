@@ -83,12 +83,12 @@ reloadUsers();
       <h2>工作台 (Dashboard)</h2>
       <div class="user-info">
         <span>当前用户：{{ userStore.userInfo?.username }}权限:{{ userStore.userInfo?.roles[0] }}</span>
-        <button @click="handleLogout" style="margin-left: 10px;">退出登陆</button>
+        <button style="margin-left: 10px;" @click="handleLogout">退出登陆</button>
       </div>
     </header>
     <hr style="margin: 20px 0;">
     <div class="action-bar">
-      <button @click="reload" :disabled="loading">
+      <button :disabled="loading" @click="reload">
         {{ loading ? '数据加载中...' : '刷新数据' }}
       </button>
     </div>
@@ -109,7 +109,7 @@ reloadUsers();
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
       <h2>用户管理 (User List)</h2>
-      <button @click="reloadUsers" :disabled="userLoading">
+      <button :disabled="userLoading" @click="reloadUsers">
         {{ userLoading ? '读取中...' : '刷新用户' }}
       </button>
     </div>

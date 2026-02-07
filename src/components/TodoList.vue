@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TodoItem } from "../types/todo";
 
-const props = defineProps<{
+const {list, title = '默认标题'} = defineProps<{
   list: TodoItem[];
   title?: string;
 }>();
