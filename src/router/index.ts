@@ -29,7 +29,7 @@ const router = createRouter({
     routes: constantRoutes // ⚠️ 起步时，只有静态路由！
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _from, next) => {
     console.log('全局路由守卫触发:', to.fullPath);
     const userStore = useUserStore();
     const token = localStorage.getItem('token');

@@ -14,3 +14,4 @@ app.use(router)
 // 以后你在任何地方写 v-auth，Vue 就知道是用 auth 这个逻辑
 app.directive('auth', auth)
 app.mount('#app')
+console.log('当前环境变量:', import.meta.env);

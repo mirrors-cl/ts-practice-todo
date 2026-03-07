@@ -25,7 +25,7 @@ class VAxios  {
       (res: AxiosResponse<Result>) =>{
         const {data} = res;
         if(data.code === 200){
-          return data;
+          return data as any;
         }else{
           return Promise.reject(data)
         }
@@ -43,8 +43,12 @@ class VAxios  {
     return this.instance.request({ ...config, method: 'POST' });
   }
 }
-
+// 修改前：写死了 '/api'
+// export const defHttp = new VAxios({
+//   baseURL: '/api',
+//   timeout: 10000,
+// })
 export const defHttp = new VAxios({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
   timeout: 10000,
 })
