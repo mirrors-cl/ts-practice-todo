@@ -4,6 +4,7 @@ import { useUserStore } from '../store/user';
 import type { BasicColumn } from "../components/BasicTable.vue";
 import { useTable } from "../hooks/useTable";
 import BasicTable from "../components/BasicTable.vue";
+import { defHttp } from '../utils/http';
 const router = useRouter();
 const userStore = useUserStore()
 
@@ -15,15 +16,17 @@ const columns: BasicColumn[] = [
   { title: '是否完成', dataIndex: 'isDone' } // 对应数据里的 isDone 字段
 ]
 
-const getTableDataApi = async () => {
+// const getTableDataApi = async () => {
 
-  await new Promise(resolve => setTimeout(resolve, 500));
-  return [
-    { id: '1', content: '学习 TS 泛型', isDone: false, deadline: '2024-12-12' },
-    { id: '2', content: '重构简历', isDone: true, deadline: '2024-11-11' },
-    { id: '3', content: '配置化表格开发', isDone: false, deadline: '2025-01-01' }
-  ]
-};
+//   await new Promise(resolve => setTimeout(resolve, 500));
+//   return [
+//     { id: '1', content: '学习 TS 泛型', isDone: false, deadline: '2024-12-12' },
+//     { id: '2', content: '重构简历', isDone: true, deadline: '2024-11-11' },
+//     { id: '3', content: '配置化表格开发', isDone: false, deadline: '2025-01-01' }
+//   ]
+// };
+const getTableDataApi = () => defHttp.get({ url: '/getTaskList' });
+
 
 const { reload, getTableProps, loading } = useTable({
   columns: columns,
@@ -50,15 +53,15 @@ const userColumns: BasicColumn[] = [
 
 // 2. 定义新供货商 (API)
 // 模拟一个返回用户数据的接口
-const getUserListApi = async () => {
-  await new Promise(resolve => setTimeout(resolve, 800)); // 假装慢一点
-  return [
-    { id: '101', username: '张三', role: '管理员' },
-    { id: '102', username: '李四', role: '普通用户' },
-    { id: '103', username: '王五', role: '审计员' }
-  ]
-}
-
+// const getUserListApi = async () => {
+//   await new Promise(resolve => setTimeout(resolve, 800)); // 假装慢一点
+//   return [
+//     { id: '101', username: '张三', role: '管理员' },
+//     { id: '102', username: '李四', role: '普通用户' },
+//     { id: '103', username: '王五', role: '审计员' }
+//   ]
+// }
+const getUserListApi = () => defHttp.get({ url: '/getUserList' });
 // 3. 调用 Hook (这一步就是复用的精髓！)
 const {
   // 把 getTableProps 重命名为 userTableProps

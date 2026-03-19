@@ -7,7 +7,7 @@ const userStore = useUserStore();
 
 // 模拟登录函数
 const handleLogin = async () =>{
-  await userStore.login('user') // 模拟以管理员身份登录
+  await userStore.login('admin') // 模拟以管理员身份登录
   router.push('/'); // 登录成功后跳转到首页
 }
 

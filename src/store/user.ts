@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-
+import { loginApi } from "../api/user";
 interface UserState {
     token: string;
     username: string;
@@ -16,8 +16,9 @@ export const useUserStore = defineStore('user', () => {
     // 模拟登录函数
     const login = async (role: 'admin' | 'user') => {
         // 模拟异步登录请求
-        await new Promise(resolve => setTimeout(resolve, 500));
-        const newToken = 'fake-token-' + Date.now();
+        // await new Promise(resolve => setTimeout(resolve, 500));
+        const res = await loginApi({ account: role, password: '123' });
+        const newToken = res.result.token;
         // const newUserInfo = {
         //     token: token.value,
         //     username: role === 'admin' ? '超级管理员' : '普通用户',
